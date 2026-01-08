@@ -10,10 +10,12 @@ This repository includes several types of security issues:
 
 | File | Vulnerability Type |
 |------|-------------------|
-| `package.json` | Outdated dependencies with known CVEs |
+| `package.json` + `package-lock.json` | Outdated dependencies with known CVEs |
 | `config.js` | Hardcoded secrets (AWS keys, database credentials, API keys) |
 | `Dockerfile` | Container running as root |
 | `terraform/main.tf` | Infrastructure misconfigurations (public S3, open SSH, unencrypted DB) |
+
+**Note:** The `package-lock.json` file is required for Trivy to detect npm vulnerabilities. Without it, Trivy cannot determine exact package versions.
 
 ## How to Use This Repository
 
@@ -88,9 +90,10 @@ When you run security scans, you should find:
 
 ## Important Notes
 
-- GitHub Actions is **free for public repositories**
-- The Security tab requires the repository to be public OR have GitHub Advanced Security enabled
-- SARIF upload requires `security-events: write` permission
+- **Repository must be PUBLIC** - Code scanning (Security tab) is only available for public repositories on free GitHub plans
+- GitHub Actions is free for public repositories
+- SARIF upload requires `security-events: write` permission in the workflow
+- Enable "Read and write permissions" in Settings → Actions → General → Workflow permissions
 
 ## Resources
 
